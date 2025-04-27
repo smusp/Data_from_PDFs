@@ -1,0 +1,66 @@
+\documentclass[tikz, border = 10pt]{standalone}
+
+\usetikzlibrary{positioning, quotes, calc, arrows.meta, shapes, decorations.text}
+\usepackage{amsmath}
+\renewcommand{\familydefault}{\sfdefault} 
+\usepackage{mathastext}
+\definecolor{orange}{HTML}{CB6015}
+
+\begin{document}
+\begin{tikzpicture}
+
+\tikzset{
+manifest/.style = {rectangle, draw,  inner sep = 2pt, minimum width = 0.5cm, 
+	minimum height = 0.5cm, fill = blue!20},
+residual/.style = {rectangle, minimum width = 0.5pt, minimum height = 1.5mm, 
+	inner sep = 0pt, outer sep = 0mm},
+regression/.style = {-{Stealth[length = 2mm]}, shorten > = 1pt, inner sep = 2pt},
+	}
+
+%% Hexagon
+\node (hexagon) [draw, color = black!35, fill = orange, line width = 2pt, regular polygon, 
+   regular polygon sides = 6, rotate = 30, minimum size = 5.08cm] {};
+
+%% PDF and R logos
+\node[inner sep=0pt] (PDF) at (-1.4, 0.3)
+   {\includegraphics[width=.1\textwidth]{PDFicon.pdf}};
+   
+\node[inner sep=0pt] (R) at (1.4, 0.05)
+{\includegraphics[width=.1\textwidth]{Rlogo.pdf}};
+
+%% Pipe
+\fill [rounded corners = 15, decorate, decoration = {text along path, text align = {fit to path stretching spaces},
+ 	text = 0.16 0.11 0.67 0.85 0.41}] 
+ 	(-1.5, -0.4) -- (-1.5, -1) -- (0.1, -1) -- (0.1, 1.1) -- (1.4, 1.1) -- (1.4, .5);
+
+%% Two gears https://tex.stackexchange.com/a/519021/76879
+\tikzset{pics/sinus gear/.style = {code = {
+   \tikzset{gear/.cd, #1}
+   \def\pv##1{\pgfkeysvalueof{/tikz/gear/##1}}
+   \pgfmathtruncatemacro{\mymod}{360/\pv{n}}
+   \clip plot[variable = \t, domain = 0:360, samples = 12*\pv{n} + 1, smooth cycle] 
+   (\t:{\pv{r2} + \pv{a}*sin(\pv{n}*Mod(\t, \mymod))}) (0, 0) circle[radius = \pv{r1}];
+   \draw[pic actions] 
+   plot[variable = \t, domain = 0:360, samples = 12*\pv{n} + 1, smooth cycle] 
+   (\t:{\pv{r2} + \pv{a}*sin(\pv{n}*Mod(\t, \mymod))}) (0, 0) circle[radius = \pv{r1}];
+   }},
+   gear/.cd, r1/.initial = 0.4cm, r2/.initial = 1cm, n/.initial = 12, a/.initial = 0.035cm
+}
+
+\begin{scope}
+   \path (-0.23, 0) 
+   pic[fill = yellow, draw = yellow, even odd rule] {sinus gear = {n = 10, r1 = 0.06cm, r2 = 0.22cm}} 
+   (0:0.23cm) 
+   pic[fill = yellow, draw = yellow, even odd rule] {sinus gear = {n = 10, r1 = 0.06cm, r2 = 0.22cm}};
+\end{scope}  
+
+%% Label
+\draw (0, -1.5) node [text = white] {\bf\large{PDF to R}};
+
+%% Heading
+\node at (-14, 0) [inner sep = 2pt, font = \Huge, align = center, color = orange, scale = 1.25] (header) 
+     {Getting data out of\\
+     PDF files into R};
+
+\end{tikzpicture}
+\end{document}
