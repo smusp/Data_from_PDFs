@@ -18,3 +18,5 @@ The paper presents a basic three-variable mediation analysis. The R scripts extr
 - [Little_2006](https://github.com/smusp/Data_from_pdf/tree/main/Little_2006)
 The paper presents a two-group, two-construct factor model. Each construct is assessed with three manifest indicators. The R scripts extract means, standard deviations, and correlations for each group, not from a table but from LISREL script. 
 
+- [Thompson_2013](https://github.com/smusp/Data_from_pdf/tree/main/Thompson_2013)
+The chapter presents an analysis assessing group differences in latent means using a two-group, two-construct factor model and a MIMIC model. Each construct is assessed with three manifest indicators. The R scripts extract means and variances/covariances for each group (for the two-group model) and for the total sample (for the MIMIC model).
