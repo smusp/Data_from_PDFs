@@ -21,14 +21,14 @@ library(here)           # relative paths
 ## Select the page with Table 1 - the 4th page of the pdf.
 ## read_lines() (from readr package) creates a vector with one string per line.
 ## Select the lines that contain Table 1, 
-## or  rather, the part of Table 1 that contains the correlations, means, 
+## or rather, the part of Table 1 that contains the correlations, means, 
 ## and standard deviations.
 path = here::here("Kurbanoglu_2021", "pdf", "Kurbanoglu.pdf")
 (tab = pdf_text(path))
 (tab = readr::read_lines(tab[4], skip_empty_rows = TRUE))
 (tab = tab[13:17])
 
-
+## Two regexes
 ## First, for each string, drop the text and the white space before the table elements.
 ## The regex searches: 
 ##    ^ from the beginning of the string;
@@ -64,47 +64,3 @@ path = here::here("Kurbanoglu_2021", "pdf", "Kurbanoglu.pdf")
 cor = unlist(tab[c(1:3)])
 cor = gsub("\\*", "", cor) 
 (cor = as.numeric(as.character(cor)))
-
-
-
-
-
-## LowerTri - Get lower triangle of correlations or (co)variances from vector
-## vector - vector of correlations or (co)variances. 
-## Assumes lower triangle of correlations or (co)variances.
-## Assumes ones along the diagonal (correlations)
-## or variances along the diagonal ((co)variances).
-##
-## n_variables - number of variables - 3
-##
-## n_decimals - number of decimal places
-##
-## n_char - Number of characters; 
-## for instance, -0.42 has 5 characters, plus one character for a space, 
-## giving a total of 6 characters. 
-
-LowerTri = function(vector, n_variables, n_decimals, n_char) {
-k = 0
-
-paste(
-cat("c(\n"),
-
-for (i in 1:n_variables)
-  {
-  for (j in 1:i)
-    {
-    k = k + 1
-    if (k < length(vector)) { 
-    cat(sprintf(paste0("%*.", n_decimals, "f,"), n_char, vector[k]))
-    } else {
-    cat(sprintf(paste0("%*.", n_decimals, "f"), n_char, vector[k]))
-    }
-    }
-  cat("\n")
-  }, 
-  
-cat(")\n")
-)
-}
-
-LowerTri(vector = cor, n_variables = 3, n_decimals = 2, n_char = 6)

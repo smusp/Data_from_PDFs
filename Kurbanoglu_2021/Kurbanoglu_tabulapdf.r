@@ -32,7 +32,7 @@ path = here::here("Kurbanoglu_2021", "pdf", "Kurbanoglu.pdf")
 
 
 ## Means are in row 4, columns 2 to 4.
-## Standard deviations are in row 5, columns 2 to 5.
+## Standard deviations are in row 5, columns 2 to 4.
 ## In each, convert characters to numeric.
 (means = as.numeric(as.character(tab[4, 2:4])))
 (sd = as.numeric(as.character(tab[5, 2:4])))

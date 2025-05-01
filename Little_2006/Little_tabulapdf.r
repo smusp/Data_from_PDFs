@@ -66,6 +66,3 @@ cor = lapply(cor, function(x) gsub("—", "-", x))
 cor = unlist(cor)
 cor = as.numeric(as.character(cor))
 (cor = split(cor, cut(seq_along(cor), 2, labels = c("Grade 7", "Grade 8"))))
-
-
-
