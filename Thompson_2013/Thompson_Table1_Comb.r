@@ -27,34 +27,34 @@ library(here)           # relative paths
 ## covariances with the variances along the diagonal. 
 ## Means are not required in the analysis, and therefore, there are no means 
 ## in this part of the data. 
-path = here::here("Thompson_2023", "pdf", "Thompson_Table1.pdf")
-(tab = pdf_text(path))
-(tab = readr::read_lines(tab, skip_empty_rows = TRUE))
-(tab = tab[c(23:29)])
+path <- here::here("Thompson_2013", "pdf", "Thompson_Table1.pdf")
+(tab <- pdf_text(path))
+(tab <- readr::read_lines(tab, skip_empty_rows = TRUE))
+(tab <- tab[c(23:29)])
 
 
 ## For each line, trim off the leading white space, and
 ## reduce internal white space to a single space.
 ## strsplit() - each line becomes an element in a list, 
 ## and each string is split at the space into separate strings.
-tab = trimws(gsub("\\s+", " ", tab))
-(tab = strsplit(tab, split = " "))
+tab <- trimws(gsub("\\s+", " ", tab))
+(tab <- strsplit(tab, split = " "))
 
 
 ## Variable names are the first element in each line.
 ## For each element in the list, select the first element of the vector.
 ## Unlist the list
-names = lapply(tab, `[[`, 1)
-(names = unlist(names))
+names <- lapply(tab, "[[", 1)
+(names <- unlist(names))
 
 
 ## Variances/Covariances
 ## Strip off the names,
 ## unlist the list,
 ## convert characters to numeric.
-var = lapply(tab, function(x) x[-1])
-var = unlist(var)
-(var = as.numeric(as.character(var)))
+var <- lapply(tab, function(x) x[-1])
+var <- unlist(var)
+(var <- as.numeric(as.character(var)))
 
 
 
@@ -67,7 +67,7 @@ library(tabulapdf)
 library(here)           # relative paths
 
 ## Get the data table
-path = here::here("Thompson_2023", "pdf", "Thompson_Table1.pdf")
+path <- here::here("Thompson_2013", "pdf", "Thompson_Table1.pdf")
 tab <- extract_tables(path, pages = 1)[[1]]
 print(tab, n = 30)
 
@@ -84,32 +84,31 @@ tab <- extract_tables(path, guess = FALSE,
 print(tab)
 
 
-## Using extract_text()
+## Using extract_text() instead
 tab <- extract_text(path, pages = 1)[[1]]
-(tab = readr::read_lines(tab, skip_empty_rows = TRUE))
+(tab <- readr::read_lines(tab, skip_empty_rows = TRUE))
 
 
 ## Select the relevant rows for the combined 
 ## Combined part of the table is in rows 36 to 42
-(tab = tab[c(36:42)])
+(tab <- tab[c(36:42)])
 
 
 ## The steps are more-or-less the same as when using pdftools. 
 ## strsplit() - each line becomes an element in a list, 
 ## and each string is split at the space into separate strings.
-(tab = strsplit(tab, split = " "))
+(tab <- strsplit(tab, split = " "))
 
 
 ## Names are the first element of each line
-names = lapply(tab, function(x) x[1])
-(names = unlist(names))
+names <- lapply(tab, function(x) x[1])
+(names <- unlist(names))
 
 
 ## Variances/Covariances
 ## Strip off the names,
 ## unlist the list,
 ## convert characters to numeric.
-var = lapply(tab, function(x) x[-1])
-var = unlist(var)
-(var = as.numeric(as.character(var)))
-
+var <- lapply(tab, function(x) x[-1])
+var <- unlist(var)
+(var <- as.numeric(as.character(var)))

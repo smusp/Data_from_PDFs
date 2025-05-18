@@ -23,7 +23,7 @@ library(tabulapdf)
 library(here)           # relative paths
 
 ## The table is on page 4 of paper (see pdf folder)
-path = here::here("Kurbanoglu_2021", "pdf", "Kurbanoglu.pdf")
+path <- here::here("Kurbanoglu_2021", "pdf", "Kurbanoglu.pdf")
 (tab <- extract_tables(path, pages = 4)[[1]])
 
 ## Returns a tibble.
@@ -34,17 +34,17 @@ path = here::here("Kurbanoglu_2021", "pdf", "Kurbanoglu.pdf")
 ## Means are in row 4, columns 2 to 4.
 ## Standard deviations are in row 5, columns 2 to 4.
 ## In each, convert characters to numeric.
-(means = as.numeric(as.character(tab[4, 2:4])))
-(sd = as.numeric(as.character(tab[5, 2:4])))
+(means <- as.numeric(as.character(tab[4, 2:4])))
+(sd <- as.numeric(as.character(tab[5, 2:4])))
 
 
 ## Correlations are in row 1 to 3, columns 2 to 4
-(cor = tab[1:3, 2:4])
+(cor <- tab[1:3, 2:4])
 
 ## Convert tibble to vector, row-wise;
 ## Drop the NAs;
 ## Drop the asterisks.
 (cor <- c(t(cor)))
-(cor = cor[!is.na(cor)])
+(cor <- cor[!is.na(cor)])
 (cor <- gsub("\\*", "", cor))
 (cor <- as.numeric(as.character(cor)))

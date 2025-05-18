@@ -28,18 +28,18 @@ library(here)           # relative paths
 ## Note that the covariance matrix contains the lower triangle of the 
 ## covariances with the variances along the diagonal.
 ## The means are to the right.  
-path = here::here("Thompson_2023", "pdf", "Thompson_Table2.pdf")
-(tab = pdf_text(path))
-(tab = readr::read_lines(tab, skip_empty_rows = TRUE))
-(tab = tab[c(7:12, 14:19)])
+path <- here::here("Thompson_2013", "pdf", "Thompson_Table2.pdf")
+(tab <- pdf_text(path))
+(tab <- readr::read_lines(tab, skip_empty_rows = TRUE))
+(tab <- tab[c(7:12, 14:19)])
 
 
 ## For each line, trim off the leading white space, and
 ## reduce internal white space to a sinle space.
 ## strsplit() - each line becomes an element in a list, 
 ## and each string is split at the space into separate strings.
-tab = trimws(gsub("\\s+", " ", tab))
-(tab = strsplit(tab, split = " "))
+tab <- trimws(gsub("\\s+", " ", tab))
+(tab <- strsplit(tab, split = " "))
 
 
 ## Variable names are the first element in each line.
@@ -47,9 +47,9 @@ tab = trimws(gsub("\\s+", " ", tab))
 ## of the list, so lapply() will do the selecting.
 ## Unlist the list, 
 ## select the first 6 names.
-names = lapply(tab, `[[`, 1)
-names = unlist(names)
-(names = names[1:6])
+names <- lapply(tab, "[[", 1)
+names <- unlist(names)
+(names <- names[1:6])
 
 
 ## Means are the last element in each line.
@@ -59,10 +59,10 @@ names = unlist(names)
 ## split the vector into a two-element list:
 ## the 1st element contains means for Group 1,
 ## the 2nd contains means for group 2.
-means = lapply(tab, function(x) x[length(x)])
-means = unlist(means)
-means = as.numeric(as.character(means))
-(means = split(means, cut(seq_along(means), 2, labels = c("Day-care", "Home-care"))))
+means <- lapply(tab, function(x) x[length(x)])
+means <- unlist(means)
+means <- as.numeric(as.character(means))
+(means <- split(means, cut(seq_along(means), 2, labels = c("Day-care", "Home-care"))))
 
 
 ## Variances/Covariances
@@ -72,9 +72,9 @@ means = as.numeric(as.character(means))
 ## split the vector into a two-element list:
 ## The 1st contains the (co)variances for Group 1,
 ## the 2nd contains (co)variances for Group 2.
-var = lapply(tab, function(x) x[-length(x)])
-var = lapply(var, function(x) x[-1])
-var = unlist(var)
-var = as.numeric(as.character(var))
-(var = split(var, cut(seq_along(var), 2, labels = c("Day-care", "Home-care"))))
+var <- lapply(tab, function(x) x[-length(x)])
+var <- lapply(var, function(x) x[-1])
+var <- unlist(var)
+var <- as.numeric(as.character(var))
+(var <- split(var, cut(seq_along(var), 2, labels = c("Day-care", "Home-care"))))
 
